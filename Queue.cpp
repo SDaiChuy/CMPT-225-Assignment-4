@@ -38,58 +38,54 @@ Queue<ElementType>::~Queue(){
 //Checks to see if the Queue is empty
 template <class ElementType>
 bool Queue<ElementType>::isEmpty() const{
-if(head == nullptr){
-    return true;
-}
-else{
-    return false;
-}
+    return head == nullptr;
 }
 
 //Inserts an element into the Rear of the Queue. 
 //Rear:[],[],[],[],[]:Front
 template <class ElementType>
 bool Queue<ElementType>::enqueue(ElementType & newElement){
-if(isEmpty()){
-    Node<ElementType>* newNode = new Node<ElementType>();
-}
-if(newNode == nullptr){
-    throw UnableToInsertExpection(" in enqueue(); new failedm newNode cannot be allocated heap memory.");
-}
-else{
-    newNode->data = newElement;
-    newNode->next = head;
-    head = newNode;
-    elementCount++;
-    return true;
-}
-return false;
+    // if queue is empty create a new node with the newElement
+    if(isEmpty()){
+        Node<ElementType>* newNode = new Node<ElementType>(newElement);
+    }
+    if(newNode == nullptr){
+        throw UnableToInsertExpection(" in enqueue(); new failed newNode cannot be allocated heap memory.");
+    }
+    else{
+        newNode->next = head;
+        head = newNode;
+        elementCount++;
+        return true;
+    }
+    return false;
 }
 
 //Removes an element from the front of the Queue.
 //Rear:[],[],[],[],[]:Front
 template <class ElementType>
 void Queue<ElementType>::dequeue(){
-if(isEmpty()){
-    throw EmptyDataCollectionException(" in dequee(); the list is empty.");
+    if(isEmpty()){
+        throw EmptyDataCollectionException(" in dequee(); the list is empty.");
+    }
+    else{
+        Node<ElementType> *toBeRemoved = tail;
+        toBeRemoved->next = nullptr;
+        tail = toBeRemoved->prev;
+        elementCount--;
+        return; 
+    }
+    return;
 }
-else{
-    Node<ElementType> *toBeRemoved = tail;
-    toBeRemoved->next = nullptr;
-    tail = toBeRemoved->prev;
-    elementCount--;
-    return true; 
-}
-return false;
-}
+
 // Returns the element at the Rear of the Queue.
 //Rear:[],[],[],[],[]:Front 
 template <class ElementType>
 ElementType & Queue<ElementType>::peek()const{
-if(head == nullptr){
-    throw EmptyDataCollectionException(" in peek(); the list is empty.");
-}
-else{
-    return head->data;
-}
+    if(isEmpty()){
+        throw EmptyDataCollectionException(" in peek(); the list is empty.");
+    }
+    else{
+        return head->data;
+    }
 }

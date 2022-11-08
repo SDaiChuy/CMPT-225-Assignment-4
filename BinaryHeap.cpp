@@ -70,6 +70,7 @@ ElementType & BinaryHeap<ElementType>::retrieve() const{
    if(elementCount == 0){
       throw EmptyDataCollectionException(" retrieve() was called on an empty binary heap.")
    }
+   
 }
 
 

@@ -10,7 +10,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-//#include "Event.h"
+#include "Event.h"
 #include "UnableToInsertException.h"
 
 template <class ElementType>

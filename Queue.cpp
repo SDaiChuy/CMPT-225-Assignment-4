@@ -1,10 +1,10 @@
 /*
  * Queue.cpp
  * 
- * Description: This is a linked list-based implementation of a Queue ADT class.
+ * Description: This is a doubly headed doubly linked list-based implementation of a Queue ADT class.
  *              Its underlying data structure is an unsorted singly-headed singly-linked list (SHSL).
  *
- * Author: AL
+ * Author: AL + SD
  * Date: Last modified: Nov. 2022
  */ 
  #include "Queue.h"
@@ -13,23 +13,25 @@
 using std::cout;
 using std::endl;
 
- template <class ElementType>
+
 
  //Constructor for the Queue
+ template <class ElementType>
  Queue<ElementType>::Queue(){
     
  }
 
  //Destructor for the Queue
+ template <class ElementType>
  Queue<ElementType>::~Queue(){
-    head = nullptr; // rear ofthe queue
-    tail = nullptr; // front of the queue
+    head = nullptr;
+    tail = nullptr;
     elementCount = 0;
  }
  
  //Checks to see if the Queue is empty
-
- Queue<ElementType>::isEmpty() const{
+ template <class ElementType>
+ bool Queue<ElementType>::isEmpty() const{
     if(head == nullptr){
         return true;
     }
@@ -40,8 +42,9 @@ using std::endl;
  
  //Inserts an element into the Rear of the Queue. 
  //Rear:[],[],[],[],[]:Front
- Queue<ElementType>::enqueue(ElementType & newElement){
-    if(elementCount == 0){
+ template <class ElementType>
+ bool Queue<ElementType>::enqueue(ElementType & newElement){
+    if(isEmpty()){
         Node<ElementType>* newNode = new Node<ElementType>();
     }
     if(newNode == nullptr){
@@ -52,28 +55,31 @@ using std::endl;
         newNode->next = head;
         head = newNode;
         elementCount++;
+        return true;
     }
-    return;
+    return false;
  }
  
  //Removes an element from the front of the Queue.
  //Rear:[],[],[],[],[]:Front
-
- Queue<ElementType>::dequeue(){
-    if(head = nullptr){
+ template <class ElementType>
+ bool Queue<ElementType>::dequeue(){
+    if(isEmpty()){
         throw EmptyDataCollectionException(" in dequee(); the list is empty.");
     }
-    Node<ElementType> *toBeRemoved;
-    toBeRemoved = tail;
-    toBeRemoved->next = nullptr;
-    tail = toBeRemoved->prev;
-    elementCount--;
-    return;
+    else{
+        Node<ElementType> *toBeRemoved = tail;
+        toBeRemoved->next = nullptr;
+        tail = toBeRemoved->prev;
+        elementCount--;
+        return true; 
+    }
+    return false;
  }
  // Returns the element at the Rear of the Queue.
  //Rear:[],[],[],[],[]:Front 
-
- Queue<ElementType>::peek()const{
+ template <class ElementType>
+ ElementType & Queue<ElementType>::peek()const{
     if(head == nullptr){
         throw EmptyDataCollectionException(" in peek(); the list is empty.");
     }

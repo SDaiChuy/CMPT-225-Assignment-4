@@ -1,7 +1,7 @@
 /*
  * Queue.h
  * 
- * Description: This is a linked list-based implementation of a List ADT class.
+ * Description: This is a doubly headed doubly linked list-based implementation of a List ADT class.
  *              Its underlying data structure is an unsorted singly-headed singly-linked list (SHSL).
  *
  * Author: AL + SD
@@ -27,6 +27,7 @@
          Node *prev;
 
       };
+
       Node<ElementType> *head; // rear of the queue
       Node<ElementType> *tail; // front of the queue
       int elementCount;
@@ -38,7 +39,7 @@
    // Default Constructor
    Queue();
 
-   // Destructors
+   // Destructor
    ~Queue();
 
    /******* Start of Queue Public Interface *******/
@@ -71,7 +72,7 @@
    // Time Efficiency: O(1)
    ElementType & peek() const;
  
-/******* End of Queue Public Interface *******/
+   /******* End of Queue Public Interface *******/
 
 
  };

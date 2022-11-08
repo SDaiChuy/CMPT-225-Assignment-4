@@ -1,38 +1,52 @@
 /* 
- * BinaryHeap.cpp
- *
- * Description: ____________ Binary Heap ADT class.
- *
- * Class Invariant:  Always a ____________ Binary Heap.
- * 
- * Author: 
- * Last Modification: Oct. 2022
- *
- */  
+* BinaryHeap.cpp
+*
+* Description: Max Binary Heap ADT class.
+*
+* Class Invariant:  Always a Max Binary Heap.
+* 
+* Author: SD
+* Last Modification: Nov. 2022
+*
+*/  
 
 #include <iostream>
 #include "BinaryHeap.h"  // Header file
 
 using std::cout;
 using std::endl;
-  
+
+// Default Constructor
+template <class ElementType>
+BinaryHeap<ElementType>::BinaryHeap(){
+
+}
+
+// Destructor
+template <class ElementType>
+BinaryHeap<ElementType>::~BinaryHeap(){
+   elements = nullptr;
+   elementCount = 0;
+}
 
 
-
-
+// Description: return the element count of the Binary Heap
 template <class ElementType>
 unsigned int BinaryHeap<ElementType>::getElementCount()const{
-    return elementCount;
+   return elementCount;
 }
+
+// Description: Insert an element into the Binary Heap, return true if successful
+//              and false otherwise
 
 template <class ElementType>
 bool BinaryHeap<ElementType>::insert(ElementType & newElement){
-    if(elementCount == 0){
-        throw EmptyDataCollectionException("insert() called with an empty BinaryHeap.");
-    }
+   if(elementCount == 0){
+      throw UnableToInsertException("insert() is unable to insert into the binary heap.");
+   }
 
+   return;
 }
-
 
 // Description: Removes (but does not return) the necessary element.
 // Precondition: This Binary Heap is not empty.
@@ -41,23 +55,31 @@ bool BinaryHeap<ElementType>::insert(ElementType & newElement){
 template <class ElementType>
 void BinaryHeap<ElementType>::remove() {  
 
-   if(elementCount == 0) 
-      throw EmptyDataCollectionException("remove() called with an empty BinaryHeap.");
+   if(elementCount == 0){
+      throw EmptyDataCollectionException("remove() called with an empty binary heap.");
+   }
+      elements[0] = elements[elementCount - 1];
+      elementCount--;
+      reHeapDown(0);
 
-   elements[0] = elements[elementCount - 1];
-   elementCount--;
-   reHeapDown(0);
-   
-   return;   
+      return;   
+   }
+
+template <class ElementType>
+ElementType & BinaryHeap<ElementType>::retrieve() const{
+   if(elementCount == 0){
+      throw EmptyDataCollectionException(" retrieve() was called on an empty binary heap.")
+   }
 }
 
+
 // Utility method
-// Description: Recursively put the array back into a ____________ Binary Heap.
+// Description: Recursively put the array back into a Max Binary Heap.
 template <class ElementType>
 void BinaryHeap<ElementType>::reHeapDown(unsigned int indexOfRoot) {
 
    unsigned int indexOfMinChild = indexOfRoot;
-   
+
    // Find indices of children.
    unsigned int indexOfLeftChild = 2 * indexOfRoot + 1;
    unsigned int indexOfRightChild = 2 * indexOfRoot + 2;
@@ -87,5 +109,6 @@ void BinaryHeap<ElementType>::reHeapDown(unsigned int indexOfRoot) {
       // Recursively put the array back into a heap
       reHeapDown(indexOfMinChild);
    }
+
    return;
 } 

@@ -1,8 +1,7 @@
 /*
+ * BinaryHeap.h
  * 
- * 
- * Description: This is a doubly headed doubly linked list-based implementation of a List ADT class.
- *              Its underlying data structure is an unsorted singly-headed singly-linked list (SHSL).
+ * Description: Array-based  Max Binary Heap
  *
  * Author: AL + SD
  * Date: Last modified: Nov. 2022
@@ -12,19 +11,14 @@
  #define BINARYHEAP_H
 
  #include "UnableToInsertException.h"
+ #include "EmptyDataCollectionException.h"
 
  template <class ElementType>
 
  class BinaryHeap{
     private:
-        class BSTNode{
-
-            public:
-            ElementType data;
-            BSTNode* left;
-            BSTNode* right;
-        };
-
+        // initialize the array for the BinaryHeap
+        ElementType* elements;
         int elementCount;
 
     public:
@@ -61,6 +55,11 @@
     // Exceptions: Throws EmptyDataCollectionException if this Binary Heap is empty.
     // Time Efficiency: O(1) 
     ElementType & retrieve() const;
+    
+
+    // Utility method
+    // Description: Recursively put the array back into a MaxBinaryHeap
+    void reHeapDown(unsigned int indexOfRoot);
     
     /******* End of Binary Heap Public Interface *******/
 

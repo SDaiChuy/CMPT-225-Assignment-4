@@ -16,10 +16,10 @@
 template <class ElementType>
 
 class PriorityQueue{
+
     private:
 
-    ElementType data;
-    int elementCount;
+    ElementType eventTime;
     
     public:
 
@@ -28,7 +28,7 @@ class PriorityQueue{
 
 
     // Copy Constructor
-
+    PriorityQueue(ElementType eventTime);
     
     // Destructor
     ~PriorityQueue();
@@ -61,9 +61,6 @@ class PriorityQueue{
     ElementType & peek() const;
     
     /*******  End of Priority Queue Public Interface *******/
-
-
-
 
 };
 #endif

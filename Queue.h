@@ -12,6 +12,8 @@
 
 #include "Event.h"
 #include "UnableToInsertException.h"
+#include "EmptyDataCollectionException.h"
+
 
 template <class ElementType>
 
@@ -27,8 +29,8 @@ private:
 
    };
 
-   Node<ElementType> *head; // rear of the queue
-   Node<ElementType> *tail; // front of the queue
+   ElementType* head; // rear of the queue
+   ElementType* tail; // front of the queue
    int elementCount;
 
 public:

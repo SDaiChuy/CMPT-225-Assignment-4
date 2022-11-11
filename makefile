@@ -1,21 +1,17 @@
-all: td
 
-td: testQueue.o Queue.o ElementDoesNotExistException.o UnableToInsertException.o EmptyListException.o 
-	g++ -Wall -o td testQueue.o Queue.o ElementDoesNotExistException.o UnableToInsertException.o EmptyListException.o 
-testQueue.o: testQueue.cpp Queue.h 
-	g++ -Wall -c testQueue.cpp
+all: bsim
+
+bsim: BankSimApp.o PriorityQueue.h BinaryHeap.h Queue.h Event.o EmptyDataCollectionException.o
+	g++ -Wall -o bsim BankSimApp.o Event.o EmptyDataCollectionException.o
+
+BankSimApp.o: BankSimApp.cpp
+	g++ -Wall -c BankSimApp.cpp  
 	
-Queue.o: Queue.h Queue.cpp
-	g++ -Wall -c Queue.cpp
+Event.o: Event.h Event.cpp
+	g++ -Wall -c Event.cpp
 
-ElementDoesNotExistException.o: ElementDoesNotExistException.h ElementDoesNotExistException.cpp
-	g++ -Wall -c ElementDoesNotExistException.cpp
+EmptyDataCollectionException.o: EmptyDataCollectionException.h EmptyDataCollectionException.cpp
+	g++ -Wall -c EmptyDataCollectionException.cpp
 
-UnableToInsertException.o: UnableToInsertException.h UnableToInsertException.cpp
-	g++ -Wall -c UnableToInsertException.cpp
-		
-EmptyListException.o: EmptyListException.h EmptyListException.cpp
-	g++ -Wall -c EmptyListException.cpp
-	
-clean:
-	rm -f td *.o
+clean:	
+	rm -f bsim *.o

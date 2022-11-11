@@ -1,9 +1,9 @@
 /* 
 * BinaryHeap.cpp
 *
-* Description: Max Binary Heap ADT class.
+* Description: Min Binary Heap ADT class.
 *
-* Class Invariant:  Always a Max Binary Heap.
+* Class Invariant:  Always a Min Binary Heap.
 * 
 * Author: SD
 * Last Modification: Nov. 2022
@@ -41,11 +41,25 @@ unsigned int BinaryHeap<ElementType>::getElementCount()const{
 
 template <class ElementType>
 bool BinaryHeap<ElementType>::insert(ElementType & newElement){
-   if(elementCount == 0){
-      throw UnableToInsertException("insert() is unable to insert into the binary heap.");
-   }
 
-   return;
+   // check to see if there is still space in the Binary Heap
+   if(elements == nullptr){
+      CAPACITY = resize();
+   }
+   else{
+      if(elementCount == CAPACITY){
+         CAPACITY = resize();
+      }
+   }
+   // add the newElement to the Binary Heap
+   elements[elementCount] = newElement;
+   // reheap the back to a Max Binary Heap
+   reHeapDown(elementCount);
+   // increment the elementCount
+   elementCount++;   
+   return true;
+   
+
 }
 
 // Description: Removes (but does not return) the necessary element.
@@ -68,11 +82,24 @@ void BinaryHeap<ElementType>::remove() {
 template <class ElementType>
 ElementType & BinaryHeap<ElementType>::retrieve() const{
    if(elementCount == 0){
-      throw EmptyDataCollectionException(" retrieve() was called on an empty binary heap.")
+      throw EmptyDataCollectionException(" retrieve() was called on an empty binary heap.");
    }
-   
+   return elements[0];
 }
 
+template <class ElementType>
+unsigned int BinaryHeap<ElementType>::resize(){
+   CAPACITY *= 2;
+   ElementType* newElements = new ElementType[CAPACITY];
+
+   for(int i = 0; i < elementCount; i++){
+      newElements[i] = elements[i];
+   }
+
+   delete [] elements;
+   elements = newElements;
+
+}
 
 // Utility method
 // Description: Recursively put the array back into a Max Binary Heap.
@@ -110,6 +137,8 @@ void BinaryHeap<ElementType>::reHeapDown(unsigned int indexOfRoot) {
       // Recursively put the array back into a heap
       reHeapDown(indexOfMinChild);
    }
+
+
 
    return;
 } 

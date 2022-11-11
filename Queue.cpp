@@ -22,8 +22,8 @@ Queue<ElementType>::Queue(){
 
 // Copy Constructor for the Queue
 template <class ElementType>
-Queue<ElementType>::Queue(ElementType& newElement): data(newElement){
-
+Queue<ElementType>::Queue(ElementType& newElement){
+    Node* data = newElement;
 }
     
 
@@ -47,17 +47,16 @@ template <class ElementType>
 bool Queue<ElementType>::enqueue(ElementType & newElement){
     // if queue is empty create a new node with the newElement
     if(isEmpty()){
-        Node<ElementType>* newNode = new Node<ElementType>(newElement);
-    }
+        ElementType* newNode = new ElementType(newElement);
+    
     if(newNode == nullptr){
-        throw UnableToInsertExpection(" in enqueue(); new failed newNode cannot be allocated heap memory.");
+        throw UnableToInsertException(" in enqueue(); new failed newNode cannot be allocated heap memory.");
     }
-    else{
         newNode->next = head;
         head = newNode;
         elementCount++;
         return true;
-    }
+    }   
     return false;
 }
 
@@ -69,7 +68,7 @@ void Queue<ElementType>::dequeue(){
         throw EmptyDataCollectionException(" in dequee(); the list is empty.");
     }
     else{
-        Node<ElementType> *toBeRemoved = tail;
+        ElementType *toBeRemoved = tail;
         toBeRemoved->next = nullptr;
         tail = toBeRemoved->prev;
         elementCount--;

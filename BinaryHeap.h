@@ -1,7 +1,7 @@
 /*
  * BinaryHeap.h
  * 
- * Description: Array-based  Max Binary Heap
+ * Description: Array-based Min Binary Heap
  *
  * Author: AL + SD
  * Date: Last modified: Nov. 2022
@@ -18,8 +18,13 @@
  class BinaryHeap{
     private:
         // initialize the array for the BinaryHeap
+        unsigned int CAPACITY = 7;
         ElementType* elements;
-        int elementCount;
+        unsigned int elementCount = 0;
+
+        // Private Method to resize
+
+        unsigned int resize();
 
     public:
 

@@ -8,12 +8,10 @@ using std::endl;
 #include "EmptyDataCollectionException.cpp"
 #include "UnableToInsertException.cpp"
 
-
 template <class ElementType>
 
 int main(){
-    // initialize time
-    int currentTime = 0;
-    while(currentTime > )
 
+    // initalized a new Priority Queue
+    ElementType* PQ = new ElementType();
 }

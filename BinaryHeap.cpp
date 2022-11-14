@@ -19,7 +19,9 @@ using std::endl;
 // Default Constructor
 template <class ElementType>
 BinaryHeap<ElementType>::BinaryHeap(){
-
+   elementCount = 0;
+   CAPACITY = 7;
+   elements =  new ElementType[CAPACITY];
 }
 
 // Destructor
@@ -36,30 +38,29 @@ unsigned int BinaryHeap<ElementType>::getElementCount()const{
    return elementCount;
 }
 
+// Description: return true is Binary Heap is empty, false otherwise
+template <class ElementType>
+bool BinaryHeap<ElementType>::isEmpty()const{
+   return elementCount == 0;
+}
 // Description: Insert an element into the Binary Heap, return true if successful
 //              and false otherwise
-
+// Time Efficiency: O(log2 n)
 template <class ElementType>
 bool BinaryHeap<ElementType>::insert(ElementType & newElement){
 
-   // check to see if there is still space in the Binary Heap
-   if(elements == nullptr){
-      CAPACITY = resize();
-   }
-   else{
-      if(elementCount == CAPACITY){
-         CAPACITY = resize();
-      }
+   if(elementCount == CAPACITY){
+      // resize the array if full
+      resize();
    }
    // add the newElement to the Binary Heap
    elements[elementCount] = newElement;
-   // reheap the back to a Max Binary Heap
-   reHeapDown(elementCount);
    // increment the elementCount
    elementCount++;   
+   // reheap the back to a Max Binary Heap
+   reHeapUp(elementCount - 1);
+  
    return true;
-   
-
 }
 
 // Description: Removes (but does not return) the necessary element.
@@ -79,6 +80,10 @@ void BinaryHeap<ElementType>::remove() {
       return;   
    }
 
+// Description: Retrieves the necessary element
+// Precondition: This binary heap is not empty
+// Postconditions: This binary heap is unchanged
+// Time efficiency: O(1)
 template <class ElementType>
 ElementType & BinaryHeap<ElementType>::retrieve() const{
    if(elementCount == 0){
@@ -88,7 +93,7 @@ ElementType & BinaryHeap<ElementType>::retrieve() const{
 }
 
 template <class ElementType>
-unsigned int BinaryHeap<ElementType>::resize(){
+void BinaryHeap<ElementType>::resize(){
    CAPACITY *= 2;
    ElementType* newElements = new ElementType[CAPACITY];
 
@@ -102,7 +107,7 @@ unsigned int BinaryHeap<ElementType>::resize(){
 }
 
 // Utility method
-// Description: Recursively put the array back into a Max Binary Heap.
+// Description: Recursively put the array back into a Min Binary Heap.
 template <class ElementType>
 void BinaryHeap<ElementType>::reHeapDown(unsigned int indexOfRoot) {
 
@@ -137,8 +142,28 @@ void BinaryHeap<ElementType>::reHeapDown(unsigned int indexOfRoot) {
       // Recursively put the array back into a heap
       reHeapDown(indexOfMinChild);
    }
-
-
-
    return;
 } 
+
+// Description: Recursively put the array back into a MinBinaryHeap
+template <class ElementType> 
+void BinaryHeap<ElementType>::reHeapUp(unsigned int indexOfRoot){
+   if (indexOfRoot > 0){
+   
+      unsigned int indexOfParent = (indexOfRoot - 1) / 2;
+
+      if (elements[indexOfRoot] <= elements[indexOfParent])
+      {
+         ElementType temp = elements[indexOfParent];
+         elements[indexOfParent] = elements[indexOfRoot];
+         elements[indexOfRoot] = temp;
+
+         reHeapUp(indexOfParent);
+      }
+   }
+
+   if(indexOfRoot == 0){
+      return;
+   }
+   return;
+}

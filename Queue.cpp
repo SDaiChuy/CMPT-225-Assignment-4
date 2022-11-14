@@ -1,90 +1,105 @@
-/*
-* Queue.cpp
-* 
-* Description: This is a doubly headed doubly linked list-based implementation of a Queue ADT class.           
-*
-* Author: AL + SD
-* Date: Last modified: Nov. 2022
-*/ 
+/* 
+ * Queue.cpp
+ *
+ * Description: Array-based implementation of Queue as an ADT class
+ * Class Invariant: Queue maintained in FIFO order
+ *
+ * Author: SD
+ * Date: Nov. 2022
+ */
+
 #include "Queue.h"
-#include <iostream>
 
-using std::cout;
-using std::endl;
+using namespace std;
 
-
-
-//Constructor for the Queue
+// Description: Default Queue constructor
+// Postcondition: Creates an empty queue
 template <class ElementType>
-Queue<ElementType>::Queue(){
-
-}
-
-// Copy Constructor for the Queue
-template <class ElementType>
-Queue<ElementType>::Queue(ElementType& newElement){
-    Node* data = newElement;
-}
-    
-
-//Destructor for the Queue
-template <class ElementType>
-Queue<ElementType>::~Queue(){
-    head = nullptr;
-    tail = nullptr;
+Queue<ElementType>::Queue()
+{
+    front = NULL;
+    rear = NULL;
     elementCount = 0;
 }
 
-//Checks to see if the Queue is empty
+// Description: Destructor
+// Postcondition: Deallocates all the memory used by the queue
 template <class ElementType>
-bool Queue<ElementType>::isEmpty() const{
-    return head == nullptr;
+Queue<ElementType>::~Queue()
+{
+    while (!isEmpty())
+        dequeue();
 }
 
-//Inserts an element into the Rear of the Queue. 
-//Rear:[],[],[],[],[]:Front
+// Description: Returns true if this Queue is empty, otherwise false.
+// Postcondition: This Queue is unchanged by this operation.
+// Time Efficiency: O(1)
 template <class ElementType>
-bool Queue<ElementType>::enqueue(ElementType & newElement){
-    // if queue is empty create a new node with the newElement
-    if(isEmpty()){
-        ElementType* newNode = new ElementType(newElement);
-    
-    if(newNode == nullptr){
-        throw UnableToInsertException(" in enqueue(); new failed newNode cannot be allocated heap memory.");
-    }
-        newNode->next = head;
-        head = newNode;
-        elementCount++;
-        return true;
-    }   
-    return false;
+bool Queue<ElementType>::isEmpty() const
+{
+    return (elementCount == 0);
 }
 
-//Removes an element from the front of the Queue.
-//Rear:[],[],[],[],[]:Front
+// Description: Returns the number of elements in this Queue.
+// Postcondition: This Queue is unchanged by this operation.
+// Time Efficiency: O(1)
 template <class ElementType>
-void Queue<ElementType>::dequeue(){
-    if(isEmpty()){
-        throw EmptyDataCollectionException(" in dequee(); the list is empty.");
-    }
-    else{
-        ElementType *toBeRemoved = tail;
-        toBeRemoved->next = nullptr;
-        tail = toBeRemoved->prev;
-        elementCount--;
-        return; 
-    }
-    return;
+int Queue<ElementType>::getElementCount() const
+{
+    return elementCount;
 }
 
-// Returns the element at the Rear of the Queue.
-//Rear:[],[],[],[],[]:Front 
+// Description: Inserts newElement at the "back" of this Queue
+//              (not necessarily the "back" of this Queue's data structure)
+//              and returns true if successful, otherwise false.
+// Time Efficiency: O(1)
 template <class ElementType>
-ElementType & Queue<ElementType>::peek()const{
-    if(isEmpty()){
-        throw EmptyDataCollectionException(" in peek(); the list is empty.");
+bool Queue<ElementType>::enqueue(ElementType &newElement)
+{
+    Node<ElementType> *newNode = new Node<ElementType>(newElement);
+    if (isEmpty())
+    {
+        front = newNode;
+        rear = front;
     }
-    else{
-        return head->data;
+    else
+    {
+        rear->next = newNode;
+        rear = rear->next;
     }
+    elementCount++;
+    return true;
+}
+
+// Description: Removes (but does not return) the element at the "front" of this Queue
+//              (not necessarily the "front" of this Queue's data structure).
+// Precondition: This Queue is not empty.
+// Exception: Throws EmptyDataCollectionException if this Queue is empty.
+// Time Efficiency: O(1)
+template <class ElementType>
+void Queue<ElementType>::dequeue()
+{
+    if (isEmpty())
+        return;
+    // throw EmptyDataCollectionException();
+    Node<ElementType> *temp = front;
+    front = front->next;
+    delete temp;
+    temp = NULL;
+    elementCount--;
+}
+
+// Description: Returns (but does not remove) the element at the "front" of this Queue
+//              (not necessarily the "front" of this Queue's data structure).
+// Precondition: This Queue is not empty.
+// Postcondition: This Queue is unchanged by this operation.
+// Exception: Throws EmptyDataCollectionException if this Queue is empty.
+// Time Efficiency: O(1)
+template <class ElementType>
+ElementType &Queue<ElementType>::peek() const
+{
+    // if (isEmpty())
+    //     return NULL;
+    // // throw EmptyDataCollectionException("peek() called with empty queue");
+    return front->item;
 }

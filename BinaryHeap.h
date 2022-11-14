@@ -17,14 +17,12 @@
 
  class BinaryHeap{
     private:
-        // initialize the array for the BinaryHeap
-        unsigned int CAPACITY = 7;
+        // initialize the size of the binary heap
+        unsigned int CAPACITY;
+        // initialize the array for the binary heap
         ElementType* elements;
-        unsigned int elementCount = 0;
-
-        // Private Method to resize
-
-        unsigned int resize();
+        // initialize the elementCount for the binary heap
+        unsigned int elementCount;
 
     public:
 
@@ -42,6 +40,16 @@
     // Postcondition: The Binary Heap is unchanged by this operation.
     // Time Efficiency: O(1)
     unsigned int getElementCount() const;
+
+    // Description: return the element count of the Binary Heap
+    // Postconditions: The Binary Heap is unchanged 
+    // Time Efficiency: O(1)
+    bool isEmpty() const;
+
+    // Description: Resize the binary heap array
+    // Postconditions: The size of the binary heap is no double the original capacity
+    // Time Efficiency: O(n)
+    void resize();
 
     // Description: Inserts newElement into the Binary Heap. 
     //              It returns true if successful, otherwise false.      
@@ -61,10 +69,12 @@
     // Time Efficiency: O(1) 
     ElementType & retrieve() const;
     
-
     // Utility method
-    // Description: Recursively put the array back into a MaxBinaryHeap
+    // Description: Recursively put the array back into a MinBinaryHeap
     void reHeapDown(unsigned int indexOfRoot);
+
+    // Description: Recursively put the array back into a MinBinaryHeap
+    void reHeapUp(unsigned int indexOfRoot);
     
     /******* End of Binary Heap Public Interface *******/
 
